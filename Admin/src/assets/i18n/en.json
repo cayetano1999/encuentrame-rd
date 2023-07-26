@@ -157,9 +157,9 @@
       }
     },
     "PROJECTS": {
-      "TEXT": "Projects",
+      "TEXT": "Casos",
       "LIST": {
-        "GRID": "Projects Grid",
+        "GRID": "Administrar Casos",
         "PROJECTLIST": "Projects List",
         "OVERVIEW": "Project Overview",
         "CREATE": "Create New"

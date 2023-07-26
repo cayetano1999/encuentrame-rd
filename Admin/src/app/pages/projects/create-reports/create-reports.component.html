@@ -1,0 +1,303 @@
+<div class="container-fluid">
+
+  <app-page-title title="Crear Reportes" [breadcrumbItems]="breadCrumbItems"></app-page-title>
+
+  <div class="row">
+    <div class="col-xl-4">
+      <ng-container *ngIf="!caseSelected">
+        <div *ngFor="let item of casesToReport" class="card overflow-hidden">
+          <div class="bg-soft bg-primary">
+            <div class="row">
+              <div class="col-12">
+                <div class="text-primary p-3">
+                  <h5 class="text-primary">Caso: {{item?.code || 'N/A'}}</h5>
+                  <p>{{item?.caseReference}}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0 px-2">
+            <div class="row">
+
+              <div class="col-sm-12">
+                <div class="pt-3">
+                  <p [innerHtml]="item?.description"></p>
+                </div>
+              </div>
+
+              <div class="col-sm-12">
+                <div class="pt-4">
+
+                  <div class="row">
+                    <div class="col-2" *ngFor="let img of item.personImages">
+                      <img class="avatar-sm" src="{{img}}" alt="">
+                    </div>
+                    <div class="col-2" *ngFor="let img of item.othersImages">
+                      <img class="avatar-sm" src="{{img}}" alt="">
+                    </div>
+
+                  </div>
+                  <div class="mt-4">
+                    <a href="javascript: void(0);" (click)="selectCase(item)" class="btn btn-primary btn-sm">Seleccionar
+                      <i class="mdi mdi-arrow-right ms-1"></i></a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div *ngIf="caseSelected" class="card overflow-hidden">
+        <div class="bg-soft bg-primary">
+          <div class="row">
+            <div class="col-12">
+              <div class="text-primary p-3">
+                <h5 class="text-primary">Caso: {{caseSelected?.code || 'N/A'}}</h5>
+                <p>{{caseSelected?.caseReference}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0 px-2">
+          <div class="row">
+
+            <div class="col-sm-12">
+              <div class="pt-3">
+                <p [innerHtml]="caseSelected?.description"></p>
+              </div>
+            </div>
+
+            <div class="col-sm-12">
+              <div class="pt-4">
+
+                <div class="row">
+                  <div class="col-2" *ngFor="let img of caseSelected.personImages">
+                    <img class="avatar-sm" src="{{img}}" alt="">
+                  </div>
+                  <div class="col-2" *ngFor="let img of caseSelected.othersImages">
+                    <img class="avatar-sm" src="{{img}}" alt="">
+                  </div>
+
+                </div>
+                <div class="mt-4">
+                  <a href="javascript: void(0);" (click)="unSelectCase(caseSelected)"
+                    class="btn btn-danger btn-sm">Remover <i class="mdi mdi-arrow-left ms-1"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- end card -->
+
+      <!-- <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Personal Information</h4>
+
+          <p class="text-muted mb-4">Hi I'm Cynthia Price,has been the industry's standard dummy text To an English
+            person, it will seem like simplified English, as a skeptical Cambridge.</p>
+          <div class="table-responsive">
+            <table class="table table-nowrap mb-0">
+              <tbody>
+                <tr>
+                  <th scope="row">Full Name :</th>
+                  <td>Cynthia Price</td>
+                </tr>
+                <tr>
+                  <th scope="row">Mobile :</th>
+                  <td>(123) 123 1234</td>
+                </tr>
+                <tr>
+                  <th scope="row">E-mail :</th>
+                  <td>cynthiaskote@gmail.com</td>
+                </tr>
+                <tr>
+                  <th scope="row">Location :</th>
+                  <td>California, United States</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div> -->
+      <!-- end card -->
+
+      <!-- <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-5">Experience</h4>
+          <div class="">
+            <ul class="verti-timeline list-unstyled">
+              <li class="event-list active">
+                <div class="event-timeline-dot">
+                  <i class="bx bx-right-arrow-circle bx-fade-right"></i>
+                </div>
+                <div class="media">
+                  <div class="me-3">
+                    <i class="bx bx-server h4 text-primary"></i>
+                  </div>
+                  <div class="media-body">
+                    <div>
+                      <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">Back end Developer</a></h5>
+                      <span class="text-primary">2016 - 19</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="event-list">
+                <div class="event-timeline-dot">
+                  <i class="bx bx-right-arrow-circle"></i>
+                </div>
+                <div class="media">
+                  <div class="me-3">
+                    <i class="bx bx-code h4 text-primary"></i>
+                  </div>
+                  <div class="media-body">
+                    <div>
+                      <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">Front end Developer</a></h5>
+                      <span class="text-primary">2013 - 16</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+              <li class="event-list">
+                <div class="event-timeline-dot">
+                  <i class="bx bx-right-arrow-circle"></i>
+                </div>
+                <div class="media">
+                  <div class="me-3">
+                    <i class="bx bx-edit h4 text-primary"></i>
+                  </div>
+                  <div class="media-body">
+                    <div>
+                      <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">UI /UX Designer</a></h5>
+                      <span class="text-primary">2011 - 13</span>
+                    </div>
+                  </div>
+                </div>
+              </li>
+            </ul>
+          </div>
+
+        </div>
+      </div> -->
+      <!-- end card -->
+    </div>
+
+    <div class="col-xl-8">
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Datos de la Persona</h4>
+          <form *ngIf="caseSelected" [formGroup]="personForm" (ngSubmit)="onSubmit()" class="form-container">
+            <div class="row mb-3">
+              <div class="form-group col-sm-4">
+                <label for="name">Nombre:</label>
+                <input type="text" id="name" formControlName="name" class="form-control" />
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label for="lastName">Apellido:</label>
+                <input type="text" id="lastName" formControlName="lastName" class="form-control" />
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label for="address">Dirección:</label>
+                <input type="text" id="address" formControlName="address" class="form-control" />
+              </div>
+
+
+            </div>
+
+            <div class="row mb-3">
+
+              <div class="form-group col-sm-4">
+                <label for="city">Ciudad:</label>
+                <input type="text" id="city" formControlName="city" class="form-control" />
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label for="skinColor">Color de Piel:</label>
+                <input type="text" id="skinColor" formControlName="skinColor" class="form-control" />
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label for="gender">Genero:</label>
+                <input type="text" id="gender" formControlName="gender" class="form-control" />
+              </div>
+
+
+            </div>
+
+            <div class="row mb-3">
+
+              <div class="form-group col-sm-4">
+                <label for="hairBorm">Color de Pelo:</label>
+                <input type="text" id="hairBorm" formControlName="hairBorm" class="form-control" />
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label for="birthDate">Fecha de Nac.</label>
+                <input type="date" id="birthDate" formControlName="birthDate" class="form-control" />
+              </div>
+
+              <div class="form-group col-sm-4">
+                <label for="age">Edad:</label>
+                <input type="number" id="age" formControlName="age" class="form-control" />
+              </div>
+
+              <div class="form-group col-sm-12">
+                <label for="specialCondition">Special Condition:</label>
+                <input type="text" id="specialCondition" formControlName="specialCondition" class="form-control" />
+              </div>
+            </div>
+
+          </form>
+
+          <div *ngIf="!caseSelected" class="alert alert-warning" role="alert">
+            <strong>Seleccione un caso</strong>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Redactar descripción del Reporte</h4>
+          <ckeditor *ngIf="caseSelected" [editor]="Editor" [(ngModel)]="caseSelected.description" [data]="caseSelected.description"></ckeditor>
+          <div *ngIf="!caseSelected" class="alert alert-warning" role="alert">
+            <strong>Seleccione un caso</strong>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" *ngIf="caseSelected">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Fotos de La Persona y Otros Articulos</h4>
+          <div class="row">
+            <div class="col-2" *ngFor="let img of caseSelected.personImages">
+              <img class="img-fluid" src="{{img}}" alt="">
+            </div>
+            <div class="col-2" *ngFor="let img of caseSelected.othersImages">
+              <img class="img-fluid" src="{{img}}" alt="">
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <div class="card" *ngIf="caseSelected">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Detalles</h4>
+          <div class="alert alert-warning" role="alert">
+            <p>Al realizar el reporte se enviará una notificación a los usuarios de <strong>Encuentrame RD</strong> para
+              dar a conocer el reporte.</p>
+          </div>
+          <button (click)="createReport()" class="btn btn-primary btn-block">Registrar Reporte y Notificar</button>
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+  <!-- end row -->
+</div>

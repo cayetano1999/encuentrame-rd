@@ -3,6 +3,12 @@ import { Injectable } from '@angular/core';
 import { getFirebaseBackend } from '../../authUtils';
 
 import { User } from '../models/auth.models';
+import { ApiService } from './api.service';
+
+
+const routes = {
+    basicLoogin: () => `/Auth/SignIn`,
+}
 
 @Injectable({ providedIn: 'root' })
 
@@ -10,7 +16,8 @@ export class AuthenticationService {
 
     user: User;
 
-    constructor() {
+
+    constructor(private apiService: ApiService) {
     }
 
     /**
@@ -61,6 +68,10 @@ export class AuthenticationService {
     logout() {
         // logout the user
         getFirebaseBackend().logout();
+    }
+
+    basicLogin(user: string, pass: string){
+        return this.apiService.post(routes.basicLoogin(), {email: user, password: pass});
     }
 }
 

@@ -7,6 +7,8 @@ import { environment } from '../../../environments/environment';
 import { CookieService } from 'ngx-cookie-service';
 import { LanguageService } from '../../core/services/language.service';
 import { TranslateService } from '@ngx-translate/core';
+import { LocalStorageEnum } from '../../core/enums/localStorageEnum';
+import { UserData } from '../../core/models/user-data.mode';
 
 @Component({
   selector: 'app-topbar',
@@ -24,6 +26,7 @@ export class TopbarComponent implements OnInit {
   flagvalue;
   countryName;
   valueset;
+  userData: UserData;
 
   constructor(@Inject(DOCUMENT) private document: any, private router: Router, private authService: AuthenticationService,
               private authFackservice: AuthfakeauthenticationService,
@@ -57,6 +60,8 @@ export class TopbarComponent implements OnInit {
     } else {
       this.flagvalue = val.map(element => element.flag);
     }
+
+    this.userData = JSON.parse(localStorage.getItem(LocalStorageEnum.USER_DATA)) as UserData;
   }
 
   setLanguage(text: string, lang: string, flag: string) {

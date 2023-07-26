@@ -5,7 +5,7 @@ const projectData = [
         text: 'New admin Design',
         subtext: 'It will be as simple as Occidental',
         users: ['assets/images/users/avatar-2.jpg', 'assets/images/users/avatar-1.jpg'],
-        status: 'Completed',
+        status: 'Pending',
         date: '15 Oct, 19',
         comment: 214
     },

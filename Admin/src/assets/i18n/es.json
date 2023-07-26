@@ -157,12 +157,10 @@
       }
     },
     "PROJECTS": {
-      "TEXT": "Proyectos",
+      "TEXT": "Casos",
       "LIST": {
-        "GRID": "Cuadrícula de proyectos",
-        "PROJECTLIST": "Lista de proyectos",
-        "OVERVIEW": "Descripción del proyecto",
-        "CREATE": "Crear nueva"
+        "GRID": "Administrar Casos"
+        
       }
     },
     "TASKS": {

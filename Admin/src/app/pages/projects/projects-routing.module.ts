@@ -5,6 +5,8 @@ import { ProjectgridComponent } from './projectgrid/projectgrid.component';
 import { ProjectlistComponent } from './projectlist/projectlist.component';
 import { OverviewComponent } from './overview/overview.component';
 import { CreateComponent } from './create/create.component';
+import { ReportsComponent } from './reports/reports.component';
+import { CreateReportComponent } from './create-reports/create-reports.component';
 
 const routes: Routes = [
     {
@@ -16,13 +18,18 @@ const routes: Routes = [
         component: ProjectlistComponent
     },
     {
-        path: 'overview',
-        component: OverviewComponent
+        path: 'reports',
+        component: ReportsComponent
     },
     {
         path: 'create',
         component: CreateComponent
+    }, 
+    {
+        path: 'create-reports',
+        component: CreateReportComponent
     }
+    
 ];
 
 @NgModule({

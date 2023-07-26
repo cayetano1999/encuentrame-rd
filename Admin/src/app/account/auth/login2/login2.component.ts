@@ -9,6 +9,8 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { first } from 'rxjs/operators';
 
 import { environment } from '../../../../environments/environment';
+import { UserData } from '../../../core/models/user-data.mode';
+import { LocalStorageEnum } from 'src/app/core/enums/localStorageEnum';
 
 @Component({
   selector: 'app-login2',
@@ -33,8 +35,8 @@ export class Login2Component implements OnInit {
   ngOnInit(): void {
     document.body.classList.add('auth-body-bg')
     this.loginForm = this.formBuilder.group({
-      email: ['admin@themesbrand.com', [Validators.required, Validators.email]],
-      password: ['123456', [Validators.required]],
+      email: ['', [Validators.required, Validators.email]],
+      password: ['', [Validators.required]],
     });
 
     // reset login status
@@ -67,27 +69,48 @@ export class Login2Component implements OnInit {
     this.submitted = true;
 
     // stop here if form is invalid
-    if (this.loginForm.invalid) {
-      return;
-    } else {
-      if (environment.defaultauth === 'firebase') {
-        this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
-          this.router.navigate(['/dashboard']);
+    // if (this.loginForm.invalid) {
+    //   return;
+    // } else {
+    //   if (environment.defaultauth === 'firebase') {
+    //     this.authenticationService.login(this.f.email.value, this.f.password.value).then((res: any) => {
+    //       this.router.navigate(['/dashboard']);
+    //     })
+    //       .catch(error => {
+    //         this.error = error ? error : '';
+    //       });
+    //   } else {
+    //     this.authFackservice.login(this.f.email.value, this.f.password.value)
+    //       .pipe(first())
+    //       .subscribe(
+    //         data => {
+    //           this.router.navigate(['/dashboard']);
+    //         },
+    //         error => {
+    //           this.error = error ? error : '';
+    //         });
+    //   }
+    // }
+  }
+
+  basicLogin(){
+      if(this.loginForm.valid){
+        const userLogin = {
+          user: this.loginForm.get('email').value,
+          pass: this.loginForm.get('password').value
+        }
+
+        this.authenticationService.basicLogin(userLogin.user, userLogin.pass).subscribe({
+          next: async (response: UserData) => {
+            console.log('Respuesta', response);
+            localStorage.setItem(LocalStorageEnum.USER_DATA, JSON.stringify(response));
+            this.router.navigate(['projects/grid']);
+          },
+          error: async (error: any) => {
+            console.log(error)
+          },
         })
-          .catch(error => {
-            this.error = error ? error : '';
-          });
-      } else {
-        this.authFackservice.login(this.f.email.value, this.f.password.value)
-          .pipe(first())
-          .subscribe(
-            data => {
-              this.router.navigate(['/dashboard']);
-            },
-            error => {
-              this.error = error ? error : '';
-            });
+
       }
-    }
   }
 }
