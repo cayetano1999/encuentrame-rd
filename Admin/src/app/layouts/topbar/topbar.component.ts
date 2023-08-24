@@ -62,6 +62,8 @@ export class TopbarComponent implements OnInit {
     }
 
     this.userData = JSON.parse(localStorage.getItem(LocalStorageEnum.USER_DATA)) as UserData;
+    debugger;
+    console.log('ok')
   }
 
   setLanguage(text: string, lang: string, flag: string) {

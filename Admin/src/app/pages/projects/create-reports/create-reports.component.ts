@@ -16,7 +16,11 @@ import { snapshortToArray, snapshortToArrayList } from 'src/environments/environ
 import { Router } from '@angular/router';
 import { revenueBarChart, statData } from '../../../pages/contacts/profile/data';
 import { ChartType } from '../../../pages/contacts/profile/profile.model';
-import { Report } from '../../../core/models/report.model';
+import { CaseData, ReportData } from '../../../core/models/report.model';
+import { FcmService } from 'src/app/core/services/firebase/fire-notification.service';
+import { HttpClient } from '@angular/common/http';
+import { PersonaCedula } from 'src/app/core/models/persona.cedula';
+import { PoliceReport } from 'src/app/core/models/police-report-model';
 
 export class PersonData {
   name: string = "N/A";
@@ -51,10 +55,22 @@ export class CreateReportComponent implements OnInit {
   ref = firebaseDatabase.database().ref('cases/');
   personForm: FormGroup;
   public Editor = ClassicEditor;
-  caseSelected: Case;
-  report: Report;
+  caseSelected: CaseData;
+  report: ReportData;
+  policeReport: PoliceReport;
+  modelPersona: PersonaCedula = new PersonaCedula();
+  personaForm: FormGroup;
+  cedulas = [
+    "40209341789",
+    "40229337437"
+  ]
 
-  constructor(private formBuilder: FormBuilder, private fireDataBase: FireDataBaseService, private router: Router) { }
+  personas: PersonaCedula[] = [];
+  index: number = 0;
+  userData = JSON.parse(localStorage.getItem(LocalStorageEnum.USER_DATA)) as UserData;
+  policeDescription: string = "";
+
+  constructor(private FCMService: FcmService, private formBuilder: FormBuilder, private fireDataBase: FireDataBaseService, private router: Router, private http: HttpClient) { }
 
   ngOnInit() {
     this.breadCrumbItems = [{ label: 'Contacts' }, { label: 'Profile', active: true }];
@@ -62,7 +78,7 @@ export class CreateReportComponent implements OnInit {
     this.fireDataBase._document = 'reports/'
     // fetches the data
     this._fetchData();
-
+    this.personaForm = this.formBuilder.group(this.modelPersona);
     this.ref.on('value', resp => {
       this.casesToReport = snapshortToArray(resp) as any;
       console.log(this.casesToReport)
@@ -84,7 +100,7 @@ export class CreateReportComponent implements OnInit {
     // Aquí puedes realizar acciones con los datos enviados.
   }
 
-  selectCase(caseData: Case){
+  selectCase(caseData: CaseData){
     Swal.fire({
       title: 'Completando información basada en las imágenes...',
       html: `<div class="spinner-border text-primary m-1" role="status">
@@ -102,7 +118,7 @@ export class CreateReportComponent implements OnInit {
 
   }
 
-  unSelectCase(caseData: Case){
+  unSelectCase(caseData: CaseData){
     this.caseSelected = undefined;
   }
 
@@ -141,17 +157,89 @@ export class CreateReportComponent implements OnInit {
     this.report = {
       code: this.generateUniqueCode(),
       description: this.caseSelected.description,
-      publishDate: new Date(),
-      comments: [],
+      // publishDate: new Date(),
+      interaction: [],
       person: this.personForm.value,
       caseData: this.caseSelected
     }
     this.fireDataBase.add(this.report);
-    Swal.fire('Reporte Realizado', 'Se ha notificado a los usuarios de Encuentrame RD', 'success').then(res=> {
+    Swal.fire('Reporte Realizado', 'Se ha notificado a los usuarios de Encuéntrame RD', 'success').then(res=> {
       if(res.isConfirmed) {
         this.router.navigate(['/projects/grid'])
       }
     });
+
+     this.FCMService.sendNotification([], "", "", "", this.report).subscribe(res=> {
+      console.log(res);
+     })
+
+  }
+
+  async createPoliceReport() {
+    // code: string;
+    // description: string;
+    // publishDate: Date;
+    // comments: {userName: string, comment: string}[];
+    // person: PersonData;
+    // caseData: Case
+    Swal.fire({
+      title: 'Creando Reporte...',
+      html: `<div class="spinner-border text-primary m-1" role="status">
+      <span class="sr-only">Loading...</span>
+    </div>`,
+      showConfirmButton: false
+    })
+    debugger;
+    this.policeReport = {
+      code: this.generateUniqueCode(),
+      description: this.policeDescription,
+      // publishDate: new Date(),
+      interaction: [],
+      persons: this.personas,
+      creationDate: new Date(),
+      user: this.userData
+    }
+    const result = await this.fireDataBase.add(this.policeReport);
+    console.log(result);
+    Swal.fire('Reporte Policial Realizado', 'Se ha notificado a los usuarios de Encuéntrame RD', 'success').then(res=> {
+      if(res.isConfirmed) {
+        this.router.navigate(['/projects/grid'])
+      }
+    });
+
+     this.FCMService.sendNotificationPolicial([], "", "", "", this.policeReport).subscribe(res=> {
+      console.log(res);
+     })
+
+  }
+
+
+  getInfoByCedula(cedula: string) {
+    debugger;
+
+    Swal.fire({
+      title: 'Esperando lector biómetrico...',
+      html: `<div class="spinner-border text-primary m-1" role="status">
+      <span class="sr-only">Loading...</span>
+      </div>`,
+      showConfirmButton: false
+    })
+    
+    
+    setTimeout(() => {
+      let cedulaIndex = this.cedulas[this.index];
+      this.http.get(`https://api.adamix.net/apec/cedula/${cedulaIndex}`).subscribe({
+        next:(response: any) => {
+          this.modelPersona = response as PersonaCedula;
+          this.personas.push(this.modelPersona);
+          this.index = this.index = this.index + 1;
+        }
+      })
+      Swal.close();
+    }, 3000);
+   
+
+    
 
   }
 

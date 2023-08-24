@@ -2,7 +2,7 @@
   <div class="navbar-header">
     <div class="d-flex">
       <!-- LOGO -->
-      <div class="navbar-brand-box">
+      <!-- <div class="navbar-brand-box">
         <a routerLink="/" class="logo logo-dark">
           <span class="logo-sm">
             <img src="assets/images/logo.svg" alt="" height="22">
@@ -20,7 +20,7 @@
             <img src="assets/images/logo-light.png" alt="" height="19">
           </span>
         </a>
-      </div>
+      </div> -->
 
       <button type="button" class="btn btn-sm px-3 font-size-16 header-item" id="vertical-menu-btn"
         (click)="toggleMobileMenu($event)">
@@ -40,9 +40,10 @@
           aria-expanded="false">
           <i class="fas fa-home text-danger" aria-hidden="true"></i> <b> {{userData?.user?.hospitalDto?.name}}</b>
         </button>
-        <button *ngIf="userData?.user?.policeCenter?.name != 'DEFAULT'" type="button" class="btn header-item" ngbDropdownToggle aria-haspopup="false"
+        
+        <button *ngIf="userData.user.policeCenterDto" type="button" class="btn header-item" ngbDropdownToggle aria-haspopup="false"
           aria-expanded="false">
-          <i class="fas fa-po text-danger" aria-hidden="true"></i> <b> {{userData?.user?.policeCenter?.name}}</b>
+          <i class="fas fa-po text-danger" aria-hidden="true"></i> <b> {{userData.user.policeCenterDto.name}}</b>
         </button>
         <div class="dropdown-menu dropdown-megamenu" ngbDropdownMenu>
           <div class="row">

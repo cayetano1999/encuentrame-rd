@@ -20,6 +20,7 @@ import { Ng2SearchPipeModule } from 'ng2-search-filter';
 import { Ng5SliderModule } from 'ng5-slider';
 import { NgSelectModule } from '@ng-select/ng-select';
 import { CreateReportComponent } from './create-reports/create-reports.component';
+import { FormModule } from '../form/form.module';
 
 @NgModule({
     
@@ -38,7 +39,8 @@ import { CreateReportComponent } from './create-reports/create-reports.component
     ReactiveFormsModule,
     CKEditorModule,
     WidgetModule,
-
+    ReactiveFormsModule,
+    FormModule,
     NgbNavModule,
     NgbModalModule,
     Ng2SearchPipeModule,

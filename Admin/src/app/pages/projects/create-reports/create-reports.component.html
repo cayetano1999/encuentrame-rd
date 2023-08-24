@@ -2,7 +2,7 @@
 
   <app-page-title title="Crear Reportes" [breadcrumbItems]="breadCrumbItems"></app-page-title>
 
-  <div class="row">
+<div class="row" *ngIf="userData?.user?.hospitalDto">
     <div class="col-xl-4">
       <ng-container *ngIf="!caseSelected">
         <div *ngFor="let item of casesToReport" class="card overflow-hidden">
@@ -88,99 +88,7 @@
           </div>
         </div>
       </div>
-      <!-- end card -->
-
-      <!-- <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-4">Personal Information</h4>
-
-          <p class="text-muted mb-4">Hi I'm Cynthia Price,has been the industry's standard dummy text To an English
-            person, it will seem like simplified English, as a skeptical Cambridge.</p>
-          <div class="table-responsive">
-            <table class="table table-nowrap mb-0">
-              <tbody>
-                <tr>
-                  <th scope="row">Full Name :</th>
-                  <td>Cynthia Price</td>
-                </tr>
-                <tr>
-                  <th scope="row">Mobile :</th>
-                  <td>(123) 123 1234</td>
-                </tr>
-                <tr>
-                  <th scope="row">E-mail :</th>
-                  <td>cynthiaskote@gmail.com</td>
-                </tr>
-                <tr>
-                  <th scope="row">Location :</th>
-                  <td>California, United States</td>
-                </tr>
-              </tbody>
-            </table>
-          </div>
-        </div>
-      </div> -->
-      <!-- end card -->
-
-      <!-- <div class="card">
-        <div class="card-body">
-          <h4 class="card-title mb-5">Experience</h4>
-          <div class="">
-            <ul class="verti-timeline list-unstyled">
-              <li class="event-list active">
-                <div class="event-timeline-dot">
-                  <i class="bx bx-right-arrow-circle bx-fade-right"></i>
-                </div>
-                <div class="media">
-                  <div class="me-3">
-                    <i class="bx bx-server h4 text-primary"></i>
-                  </div>
-                  <div class="media-body">
-                    <div>
-                      <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">Back end Developer</a></h5>
-                      <span class="text-primary">2016 - 19</span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="event-list">
-                <div class="event-timeline-dot">
-                  <i class="bx bx-right-arrow-circle"></i>
-                </div>
-                <div class="media">
-                  <div class="me-3">
-                    <i class="bx bx-code h4 text-primary"></i>
-                  </div>
-                  <div class="media-body">
-                    <div>
-                      <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">Front end Developer</a></h5>
-                      <span class="text-primary">2013 - 16</span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-              <li class="event-list">
-                <div class="event-timeline-dot">
-                  <i class="bx bx-right-arrow-circle"></i>
-                </div>
-                <div class="media">
-                  <div class="me-3">
-                    <i class="bx bx-edit h4 text-primary"></i>
-                  </div>
-                  <div class="media-body">
-                    <div>
-                      <h5 class="font-size-15"><a href="javascript: void(0);" class="text-dark">UI /UX Designer</a></h5>
-                      <span class="text-primary">2011 - 13</span>
-                    </div>
-                  </div>
-                </div>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-      </div> -->
-      <!-- end card -->
+    
     </div>
 
     <div class="col-xl-8">
@@ -295,9 +203,124 @@
           <button (click)="createReport()" class="btn btn-primary btn-block">Registrar Reporte y Notificar</button>
         </div>
       </div>
-
-
     </div>
   </div>
-  <!-- end row -->
+
+
+
+  <div class="mt-4" *ngIf="userData?.user?.policeCenterDto">
+    <a href="javascript: void(0);" (click)="getInfoByCedula('item')" class="btn btn-primary btn-sm mb-5">Abrir lector
+      <i class="fa fa-fingerprint ms-1"></i></a>
+  </div>
+
+  <div class="row" *ngIf="userData?.user?.policeCenterDto">
+    <div class="col-sm-3" >
+      <ng-container>
+  
+        
+  
+        <div  class="card overflow-hidden" *ngFor="let item of personas">
+          <div class="bg-soft bg-primary">
+            <div class="row">
+              <div class="col-12">
+                <div class="text-primary p-3">
+                  <h5 class="text-primary">Información de la Persona</h5>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="card-body pt-0 px-2" >
+            <div class="row">
+  
+              <div class="col-sm-12 text-center mt-4" *ngIf="modelPersona">
+                <img   [src]="item?.foto" alt="">
+                <h3>{{item?.Nombres}} {{item?.Apellido1}} {{item?.Apellido2}}</h3>
+              </div>
+  
+              <div class="col-sm-12">
+                <div class="pt-4">
+  
+                  
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ng-container>
+      <div *ngIf="caseSelected" class="card overflow-hidden">
+        <div class="bg-soft bg-primary">
+          <div class="row">
+            <div class="col-12">
+              <div class="text-primary p-3">
+                <h5 class="text-primary">Caso: {{caseSelected?.code || 'N/A'}}</h5>
+                <p>{{caseSelected?.caseReference}}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="card-body pt-0 px-2">
+          <div class="row">
+  
+            <div class="col-sm-12">
+              <div class="pt-3">
+                <p [innerHtml]="caseSelected?.description"></p>
+              </div>
+            </div>
+  
+            <div class="col-sm-12">
+              <div class="pt-4">
+  
+                <div class="row">
+                  <div class="col-2" *ngFor="let img of caseSelected.personImages">
+                    <img class="avatar-sm" src="{{img}}" alt="">
+                  </div>
+                  <div class="col-2" *ngFor="let img of caseSelected.othersImages">
+                    <img class="avatar-sm" src="{{img}}" alt="">
+                  </div>
+  
+                </div>
+                <div class="mt-4">
+                  <a href="javascript: void(0);" (click)="unSelectCase(caseSelected)"
+                    class="btn btn-danger btn-sm">Remover <i class="mdi mdi-arrow-left ms-1"></i></a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    
+    </div>
+  
+    <div class="col-sm-9" *ngIf="personas?.length">
+  
+      <div class="card">
+        
+      </div>
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Redactar descripción del Reporte</h4>
+          <ckeditor [(ngModel)]="policeDescription" [editor]="Editor"></ckeditor>
+        
+        </div>
+      </div>
+  
+  
+      <div class="card">
+        <div class="card-body">
+          <h4 class="card-title mb-4">Detalles</h4>
+          <div class="alert alert-warning" role="alert">
+            <p>Al realizar el reporte se enviará una notificación a los usuarios de <strong>Encuéntrame RD</strong> para
+              dar a conocer el reporte.</p>
+          </div>
+          <button (click)="createReport()" *ngIf="userData?.user?.user?.hospitalDto" class="btn btn-primary btn-block">Registrar Reporte y Notificar</button>
+          <button (click)="createPoliceReport()" *ngIf="userData?.user?.policeCenterDto" class="btn btn-primary btn-block">Registrar Reporte y Notificar</button>
+
+          {{userData?.user?.user?.policeCenterDto | json}}
+        </div>
+      </div>
+    </div>
+  </div>
 </div>
+
+

@@ -253,11 +253,53 @@ export const MENU: MenuItem[] = [
                 id: 41,
                 label: 'Reportes',
                 link: '/projects/reports',
-                parentId: 38
+                parentId: 38,
             },
             {
                 id: 40,
                 label: 'Casos',
+                link: '/projects/grid',
+                parentId: 38
+            },
+            {
+                id: 40,
+                label: 'Hospitales',
+                link: '/projects/grid',
+                parentId: 38
+            },
+            {
+                id: 40,
+                label: 'Destacamentos',
+                link: '/projects/grid',
+                parentId: 38
+            },
+            {
+                id: 40,
+                label: 'Notificaciones',
+                link: '/projects/grid',
+                parentId: 38
+            },
+            {
+                id: 40,
+                label: 'Dashboard',
+                link: '/projects/grid',
+                parentId: 38
+            },
+            {
+                id: 40,
+                label: 'Usuarios',
+                link: '/projects/grid',
+                parentId: 38
+            },
+            {
+                id: 40,
+                label: 'Roles',
+                link: '/projects/grid',
+                parentId: 38
+            },
+            {
+                id: 40,
+                label: 'Dispositivos',
                 link: '/projects/grid',
                 parentId: 38
             },

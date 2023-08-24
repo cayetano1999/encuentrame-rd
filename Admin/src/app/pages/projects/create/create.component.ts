@@ -184,7 +184,7 @@ export class CreateComponent implements OnInit {
       code: this.generateUniqueCode(),
       caseReference: `${this.caseForm.get('reference').value}  ${this.datePipe.transform(new Date(), 'full')}`,
       description: this.caseForm.get('description').value,
-      creationDate: this.datePipe.transform(new Date(), 'short'),
+      creationDate: this.datePipe.transform(new Date(), 'dd/MM/yyyy'),
       user: JSON.parse(localStorage.getItem(LocalStorageEnum.USER_DATA)) as UserData,
       personImages: [],
       othersImages: [],

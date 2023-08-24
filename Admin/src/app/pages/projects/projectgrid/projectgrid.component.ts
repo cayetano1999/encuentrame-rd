@@ -4,8 +4,10 @@ import { Project } from '../project.model';
 import * as firebaseDatabase from 'firebase';
 import { projectData } from '../projectdata';
 import { Router } from '@angular/router';
-import { snapshortToArray, snapshortToArrayList } from 'src/environments/environment';
-import { Case } from 'src/app/core/models/case.model';
+import { Case } from '../../../core/models/case.model';
+import { snapshortToArray } from '../../../../environments/environment';
+import { UserData } from '../../../core/models/user-data.mode';
+import { THIS_EXPR } from '@angular/compiler/src/output/output_ast';
 
 @Component({
   selector: 'app-projectgrid',
@@ -25,6 +27,8 @@ export class ProjectgridComponent implements OnInit {
 
   projectData: Project[];
   casesToReport: Case[];
+  userData: UserData = JSON.parse(localStorage.getItem('userData'));
+
 
   constructor(private router: Router) { }
 
@@ -33,6 +37,11 @@ export class ProjectgridComponent implements OnInit {
     this.projectData = projectData;
     this.ref.on('value', resp => {
       this.casesToReport = snapshortToArray(resp) as any;
+      debugger;
+      if(this.userData.user.policeCenterDto) {
+        this.casesToReport = this.casesToReport.filter(e=> e.user.user.policeCenterDto != null && e.user.user.policeCenterDto.address != 'N/A');
+      }
+
       console.log(this.casesToReport)
       window.scrollTo(0, document.body.scrollHeight);
     });
